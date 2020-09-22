@@ -4,7 +4,6 @@ import com.xf.demo03.dao.UserDao;
 import com.xf.demo03.model.User;
 import com.xf.demo03.repository.UserRepository;
 import com.xf.demo03.service.UserService;
-import org.apache.commons.logging.Log;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.data.domain.Page;
@@ -24,7 +23,7 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserRepository userRepository;
     @Resource
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String, User> redisTemplate;
     private static final String ALL_USER = "ALL_USER_LIST";
     Logger logger = LogManager.getLogger(this.getClass());
     @Override
@@ -68,6 +67,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<User> findAll(Pageable pageable){
         return userRepository.findAll(pageable);
+    }
+
+    @Override
+    public User findByUserName(String username) {
+        List<User> users = (List<User>) findByUserName(username);
+        if(users==null && users.size()<=0){
+            return null;
+        }
+        return users.get(0);
     }
 
     @Resource

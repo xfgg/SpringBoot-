@@ -36,6 +36,12 @@ public interface UserService {
     Page<User> findAll(Pageable pageable);
 
     /**
+     * 根据用户名查找用户
+     * @param username
+     * @return
+     */
+    User findByUserName(String username);
+    /**
      * mybatis接口
      * @param username
      * @param password
